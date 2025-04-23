@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>AI TÜV Check</title>
+</head>
+<body>
+    <h2>AI TÜV Check – Lade ein Foto hoch:</h2>
+    <input type="file" id="fileInput" />
+    <button onclick="upload()">Check starten</button>
+    <p id="result"></p>
+
+    <script>
+        async function upload() {
+            const file = document.getElementById('fileInput').files[0];
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const res = await fetch("https://ai-tuev.onrender.com/analyze", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await res.json();
+            document.getElementById("result").innerText = data.diagnose;
+        }
+    </script>
+</body>
+</html>
